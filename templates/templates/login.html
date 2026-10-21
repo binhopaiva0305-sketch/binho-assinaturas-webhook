@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Binho Assinaturas — Login</title>
+<style>
+body{margin:0;background:#0b0d12;color:#fff;font-family:Arial,sans-serif}
+.box{max-width:360px;margin:18vh auto;padding:26px 18px}
+input,button{width:100%;box-sizing:border-box;padding:14px;border-radius:10px;border:1px solid #303642;margin-top:10px}
+input{background:#151922;color:#fff}
+button{background:#fff;color:#111;font-weight:700;cursor:pointer}
+.err{color:#ff7675;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>Binho Assinaturas</h1>
+<p>Acesso restrito</p>
+<form method="post">
+<input type="password" name="password" placeholder="Senha" required>
+<button>Entrar</button>
+</form>
+{% if error %}
+<div class="err">{{ error }}</div>
+{% endif %}
+</div>
+</body>
+</html>
