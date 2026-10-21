@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Binho Assinaturas — Códigos</title>
+<style>
+body{margin:0;background:#0b0d12;color:#fff;font-family:Arial,sans-serif}
+.wrap{max-width:760px;margin:auto;padding:28px 16px}
+h1{margin-bottom:4px}.sub{color:#9da3ad;margin-bottom:22px}
+.card{background:#151922;border:1px solid #282e3a;border-radius:16px;padding:18px;margin:12px 0}
+.service{font-weight:700}.code{font-size:34px;letter-spacing:5px;margin-top:10px}
+.empty{color:#9da3ad;text-align:center;padding:45px}
+.top{display:flex;justify-content:space-between;align-items:center}
+a{color:#9da3ad;text-decoration:none}
+.badge{font-size:12px;color:#78e08f}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<div>
+<h1>Binho Assinaturas</h1>
+<div class="sub">Códigos recebidos</div>
+</div>
+<a href="/logout">Sair</a>
+</div>
+<div id="list"><div class="empty">Carregando...</div></div>
+</div>
+
+<script>
+async function load(){
+const r=await fetch('/api/codes',{cache:'no-store'});
+if(!r.ok)return;
+const items=await r.json();
+const list=document.getElementById('list');
+
+if(!items.length){
+list.innerHTML='<div class="empty">Nenhum código recebido.</div>';
+return;
+}
+
+list.innerHTML=items.map(x=>`
+<div class="card">
+<div class="service">${escapeHtml(x.service)}</div>
+<div class="code">${escapeHtml(x.code)}</div>
+<div class="badge">Código recebido</div>
+</div>`).join('');
+}
+
+function escapeHtml(s){
+return String(s).replace(/[&<>"']/g,m=>({
+'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+}[m]));
+}
+
+load();
+setInterval(load,5000);
+</script>
+</body>
+</html>
